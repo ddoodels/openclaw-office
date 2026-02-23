@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🦞 OpenClaw Office - Клавдия</title>
+    <title>⚡ OpenClaw AI Core - KLAVDIA</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
         
         * {
             margin: 0;
@@ -16,518 +16,456 @@
         }
         
         :root {
-            --gold: #D4AF37;
-            --gold-light: #F4E4C1;
-            --dark: #0a0a0f;
-            --dark-light: #1a1a2e;
-            --accent: #c44569;
+            --neon-blue: #00f3ff;
+            --neon-pink: #bc13fe;
+            --neon-gold: #ffd700;
+            --bg-dark: #050510;
+            --panel-bg: rgba(10, 15, 30, 0.75);
+            --border-color: rgba(0, 243, 255, 0.3);
         }
         
         body {
-            background: var(--dark);
-            font-family: 'Montserrat', sans-serif;
+            background: var(--bg-dark);
+            font-family: 'Rajdhani', sans-serif;
             overflow: hidden;
             color: #fff;
             height: 100vh;
             width: 100vw;
         }
         
-        .app {
+        /* Background & Character */
+        .scene {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            position: relative;
+            background-image: url('klavdia_cyber.png');
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
         }
         
-        /* Navigation */
-        .nav {
+        /* CRT Scanline effect */
+        .scanlines {
             position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .vignette {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent 50%, rgba(0,0,0,0.8) 100%);
+            pointer-events: none;
+            z-index: 11;
+        }
+
+        /* HUD Interface */
+        .hud-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 20;
+            pointer-events: none; /* Let clicks pass through to interactive elements */
+        }
+        
+        /* Top Navigation Bar */
+        .top-bar {
+            position: absolute;
             top: 20px;
-            left: 20px;
-            right: 20px;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
-            gap: 10px;
-            z-index: 1000;
-            flex-wrap: wrap;
-            justify-content: center;
+            gap: 5px;
+            pointer-events: auto;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 5px;
+            border-radius: 30px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
         }
         
         .nav-btn {
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(212, 175, 55, 0.5);
-            color: var(--gold);
-            padding: 10px 20px;
-            border-radius: 25px;
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.7);
+            padding: 8px 20px;
+            font-family: 'Orbitron', sans-serif;
             font-size: 12px;
-            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .nav-btn:hover, .nav-btn.active {
-            background: var(--gold);
-            color: var(--dark);
-            border-color: var(--gold);
-        }
-        
-        /* Sections */
-        .section {
-            display: none;
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        .section.active {
-            display: block;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        /* ===== OFFICE - REALISTIC ===== */
-        .office {
-            background: #000;
             position: relative;
             overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        /* Main Image */
-        .office-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('klavdia.png');
-            background-size: cover;
-            background-position: center;
-            animation: breathe 8s ease-in-out infinite;
-            transform-origin: center center;
-        }
-
-        /* Breathe animation for image */
-        @keyframes breathe {
-            0% { transform: scale(1.0); }
-            50% { transform: scale(1.02); }
-            100% { transform: scale(1.0); }
-        }
-        
-        /* Overlay effects */
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.4) 100%);
-            pointer-events: none;
-        }
-
-        /* Rain */
-        .rain {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABZJREFUeNpi/P//PwMIMAIx40Qlz2CAAQEA/04Ew2t44u4AAAAASUVORK5CYII=');
-            opacity: 0.1;
-            animation: rain 0.3s linear infinite;
-            pointer-events: none;
-        }
-        
-        @keyframes rain {
-            from { background-position: 0 0; }
-            to { background-position: -20px 20px; }
-        }
-        
-        /* Thought bubble */
-        .thought-bubble {
-            position: absolute;
-            top: 20%;
-            right: 15%;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 20px 25px;
+            transition: all 0.3s;
             border-radius: 20px;
-            border-bottom-left-radius: 0;
-            max-width: 250px;
-            color: #1a1a2e;
-            font-size: 14px;
-            line-height: 1.5;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            animation: float 4s ease-in-out infinite;
-            z-index: 20;
-            opacity: 0.95;
         }
         
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        .nav-btn.active {
+            background: rgba(0, 243, 255, 0.15);
+            color: var(--neon-blue);
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+            text-shadow: 0 0 5px var(--neon-blue);
         }
         
-        .thought-label {
-            color: #c44569;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
+        .nav-btn:hover {
+            color: #fff;
         }
         
-        /* Info Panel */
-        .info-panel {
+        /* Status Panel (Top Left) */
+        .status-panel {
             position: absolute;
-            bottom: 30px;
-            left: 30px;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            max-width: 280px;
-            z-index: 20;
+            top: 20px;
+            left: 20px;
+            padding: 15px;
+            background: var(--panel-bg);
+            border-left: 3px solid var(--neon-blue);
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 90% 100%, 0 100%);
+            width: 220px;
         }
         
-        .info-title {
-            color: var(--gold);
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .info-stat {
+        .status-row {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 5px 0;
-            font-size: 13px;
+            margin-bottom: 5px;
+            font-size: 12px;
             color: rgba(255,255,255,0.8);
         }
         
-        .status-dot {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background: #2ecc71;
-            border-radius: 50%;
-            margin-right: 8px;
-            animation: pulse 2s infinite;
+        .status-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            color: var(--neon-blue);
         }
         
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.3); }
+        .status-bar-bg {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            margin-top: 2px;
         }
         
-        /* ===== SKILLS & NOTES (Dark theme) ===== */
-        .skills, .notes {
-            background: #0f0f12;
-            padding: 80px 20px 20px;
+        .status-bar-fill {
+            height: 100%;
+            background: var(--neon-blue);
+            width: 100%;
+            box-shadow: 0 0 5px var(--neon-blue);
+            animation: pulseBar 2s infinite;
+        }
+        
+        @keyframes pulseBar {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+        
+        /* Chat/Thought Bubble */
+        .comms-bubble {
+            position: absolute;
+            top: 25%;
+            right: 10%;
+            width: 280px;
+            background: rgba(10, 15, 30, 0.85);
+            border: 1px solid var(--neon-pink);
+            padding: 20px;
+            backdrop-filter: blur(5px);
+            clip-path: polygon(10% 0, 100% 0, 100% 90%, 90% 100%, 0 100%, 0 10%);
+            box-shadow: 0 0 20px rgba(188, 19, 254, 0.2);
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .comms-header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(188, 19, 254, 0.3);
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            color: var(--neon-pink);
+        }
+        
+        .typing-text {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #fff;
+            text-shadow: 0 0 2px rgba(255,255,255,0.5);
+        }
+        
+        /* Holographic Panels (Decorative) */
+        .holo-panel {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.6;
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            background: rgba(0, 243, 255, 0.02);
+        }
+        
+        .holo-1 {
+            bottom: 20%;
+            left: 10%;
+            width: 200px;
+            height: 150px;
+            transform: perspective(500px) rotateY(15deg);
+        }
+        
+        .holo-2 {
+            top: 30%;
+            left: 15%;
+            width: 150px;
+            height: 100px;
+            transform: perspective(500px) rotateY(-10deg);
+        }
+        
+        /* Content Sections (Overlay) */
+        .content-overlay {
+            position: absolute;
+            top: 80px; /* Below nav */
+            left: 0;
+            width: 100%;
+            height: calc(100% - 80px);
+            background: rgba(5, 5, 16, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 50;
+            display: none;
             overflow-y: auto;
+            padding: 20px;
+            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
-        .section-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 32px;
-            color: var(--gold);
-            text-align: center;
-            margin-bottom: 30px;
+        .content-overlay.active {
+            display: block;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .section-header {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-gold);
+            font-size: 24px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--neon-gold);
+            padding-bottom: 10px;
+            text-transform: uppercase;
         }
         
         /* Skills Grid */
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             gap: 15px;
-            max-width: 1000px;
-            margin: 0 auto;
         }
         
         .skill-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
             padding: 15px;
-            text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 2px;
+            height: 100%;
+            background: var(--neon-blue);
+            opacity: 0.5;
         }
         
         .skill-card:hover {
-            background: rgba(212, 175, 55, 0.1);
-            border-color: var(--gold);
-            transform: translateY(-3px);
+            background: rgba(0, 243, 255, 0.1);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+        }
+        
+        .skill-card.installed::before {
+            background: #00ff00;
+        }
+        
+        .skill-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+        
+        .skill-desc {
+            font-size: 10px;
+            color: rgba(255,255,255,0.6);
         }
 
-        .skill-icon { font-size: 24px; display: block; margin-bottom: 10px; }
-        .skill-name { font-size: 13px; font-weight: 500; }
-        .skill-desc { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 5px; }
-        
-        .skills-category-header {
-            grid-column: 1 / -1;
-            margin-top: 20px;
-            padding-bottom: 5px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            color: var(--gold);
-            font-size: 14px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        /* Notes */
-        .notes-container {
-            max-width: 800px;
-            margin: 0 auto;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .notes-toolbar {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .notes-btn {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: #fff;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.3s ease;
-        }
-        
-        .notes-btn:hover {
-            background: var(--gold);
-            color: #000;
-            border-color: var(--gold);
-        }
-        
-        .notes-area {
-            flex: 1;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 10px;
-            padding: 20px;
-            color: #fff;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 15px;
-            line-height: 1.6;
-            resize: none;
-            outline: none;
-        }
-        
-        .notes-area:focus {
-            border-color: var(--gold);
-        }
-        
-        /* Mobile */
+        /* Mobile Adjustments */
         @media (max-width: 768px) {
-            .office-bg {
-                background-position: center bottom;
-                transform-origin: center bottom;
-            }
-            .thought-bubble {
-                top: 15%;
+            .scene { background-position: center bottom; }
+            .comms-bubble {
+                top: auto;
+                bottom: 120px;
                 right: 5%;
                 left: 5%;
-                max-width: none;
                 width: 90%;
             }
-            .info-panel {
-                bottom: 10px;
-                left: 10px;
-                right: 10px;
-                max-width: none;
-            }
+            .holo-panel { display: none; }
+            .status-panel { transform: scale(0.8); origin: top left; }
         }
     </style>
 </head>
 <body>
-    <div class="app">
-        <nav class="nav">
-            <button class="nav-btn active" onclick="showSection('office')">🏢 Офис</button>
-            <button class="nav-btn" onclick="showSection('skills')">📚 Скиллы</button>
-            <button class="nav-btn" onclick="showSection('notes')">📝 Заметки</button>
-        </nav>
+    <!-- Background -->
+    <div class="scene"></div>
+    <div class="scanlines"></div>
+    <div class="vignette"></div>
+    
+    <!-- HUD -->
+    <div class="hud-container">
+        <!-- Status -->
+        <div class="status-panel">
+            <div class="status-row">
+                <span class="status-label">SYSTEM STATUS</span>
+                <span style="color: #00ff00">ONLINE</span>
+            </div>
+            <div class="status-bar-bg"><div class="status-bar-fill" style="width: 100%"></div></div>
+            <div class="status-row" style="margin-top: 10px;">
+                <span class="status-label">SKILLS LOADED</span>
+                <span>114</span>
+            </div>
+            <div class="status-bar-bg"><div class="status-bar-fill" style="width: 85%; background: var(--neon-gold); box-shadow: 0 0 5px var(--neon-gold)"></div></div>
+            <div class="status-row" style="margin-top: 10px;">
+                <span class="status-label">TIME</span>
+                <span id="clock">00:00:00</span>
+            </div>
+        </div>
         
-        <!-- OFFICE -->
-        <section id="office" class="section office active">
-            <div class="office-bg"></div>
-            <div class="rain"></div>
-            <div class="overlay"></div>
-            
-            <div class="thought-bubble" id="thought">
-                <div class="thought-label">💭 Мысли</div>
-                <div id="thought-text">Привет! Я Клавдия.<br>Твой личный бизнес-ассистент.</div>
-            </div>
-            
-            <div class="info-panel">
-                <div class="info-title">🦞 OpenClaw Office</div>
-                <div class="info-stat">
-                    <span><span class="status-dot"></span>Статус</span>
-                    <span>Онлайн</span>
-                </div>
-                <div class="info-stat">
-                    <span>Скиллов</span>
-                    <span>114</span>
-                </div>
-                <div class="info-stat">
-                    <span>Время</span>
-                    <span id="clock">--:--</span>
-                </div>
-            </div>
-        </section>
+        <!-- Holo Decorations -->
+        <div class="holo-panel holo-1"></div>
+        <div class="holo-panel holo-2"></div>
         
-        <!-- SKILLS -->
-        <section id="skills" class="section skills">
-            <div class="section-title">📚 Каталог скиллов</div>
-            <div class="skills-grid" id="skillsGrid">
-                <!-- JS will load skills here -->
+        <!-- Chat Bubble -->
+        <div class="comms-bubble" id="comms">
+            <div class="comms-header">
+                <span>INCOMING MESSAGE</span>
+                <span>CH: MAIN</span>
             </div>
-        </section>
-        
-        <!-- NOTES -->
-        <section id="notes" class="section notes">
-            <div class="notes-container">
-                <div class="section-title">📝 Заметки</div>
-                <div class="notes-toolbar">
-                    <button class="notes-btn" onclick="saveNotes()">💾 Сохранить</button>
-                    <button class="notes-btn" onclick="clearNotes()">🗑 Очистить</button>
-                </div>
-                <textarea class="notes-area" id="notesArea" placeholder="Пиши сюда идеи..."></textarea>
+            <div class="typing-text" id="thought-text">
+                Системы готовы. Ожидаю указаний.
             </div>
-        </section>
+        </div>
     </div>
     
-    <!-- SKILLS DATA -->
-    <script src="skills_repo_data.js"></script>
+    <!-- Navigation (Interactive) -->
+    <nav class="top-bar">
+        <button class="nav-btn active" onclick="showSection('main')">CMD CENTER</button>
+        <button class="nav-btn" onclick="showSection('skills')">SKILLS DB</button>
+        <button class="nav-btn" onclick="showSection('notes')">LOGS</button>
+    </nav>
     
+    <!-- SKILLS OVERLAY -->
+    <div id="skills-section" class="content-overlay">
+        <div class="section-header">SKILLS DATABASE</div>
+        <div id="skills-container" class="skills-grid"></div>
+    </div>
+    
+    <!-- NOTES OVERLAY -->
+    <div id="notes-section" class="content-overlay">
+        <div class="section-header">MISSION LOGS</div>
+        <textarea style="width: 100%; height: 400px; background: rgba(0,0,0,0.5); border: 1px solid var(--border-color); color: #fff; padding: 15px; font-family: 'Rajdhani'; font-size: 16px;" id="notesArea" placeholder="Enter log data..."></textarea>
+        <button onclick="saveNotes()" style="margin-top: 10px; background: var(--neon-blue); border: none; padding: 10px 20px; font-family: 'Orbitron'; cursor: pointer;">SAVE LOG</button>
+    </div>
+
+    <!-- DATA -->
+    <script src="skills_repo_data.js"></script>
+
     <script>
         // Telegram
         let tg = window.Telegram?.WebApp;
-        if (tg) { tg.expand(); tg.ready(); }
+        if (tg) { tg.expand(); tg.ready(); tg.enableClosingConfirmation(); }
         
         // Clock
-        function updateClock() {
+        setInterval(() => {
             const now = new Date();
-            document.getElementById('clock').textContent = now.toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'});
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
+            document.getElementById('clock').innerText = now.toLocaleTimeString('ru-RU');
+        }, 1000);
         
         // Navigation
         function showSection(id) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
             event.target.classList.add('active');
             
-            if(id === 'skills') loadSkills();
+            document.querySelectorAll('.content-overlay').forEach(el => el.classList.remove('active'));
+            
+            if (id === 'skills') {
+                document.getElementById('skills-section').classList.add('active');
+                renderSkills();
+            } else if (id === 'notes') {
+                document.getElementById('notes-section').classList.add('active');
+            } else {
+                // Main view - close overlays
+            }
         }
         
-        // Thoughts rotation
-        const thoughts = [
-            "Анализирую данные... 📊",
-            "Готова к новым задачам! 💼",
-            "Проверяю отчёты Яндекс.Директ 📉",
-            "Мониторю конкурентов 👀",
-            "Всё под контролем 👌",
-            "Жду твоих указаний ⌨️"
-        ];
-        let tIndex = 0;
-        setInterval(() => {
-            tIndex = (tIndex + 1) % thoughts.length;
-            document.getElementById('thought-text').innerHTML = thoughts[tIndex];
-        }, 8000);
-        
-        // Skills Loader
-        function loadSkills() {
-            const grid = document.getElementById('skillsGrid');
-            if(grid.children.length > 0) return;
-            
-            // Используем данные из skills_repo_data.js (если есть) или фолбек
+        // Render Skills
+        let skillsRendered = false;
+        function renderSkills() {
+            if (skillsRendered) return;
+            const container = document.getElementById('skills-container');
             const data = (typeof allSkillsFromRepo !== 'undefined') ? allSkillsFromRepo : [];
             const installed = (typeof installedSkillNames !== 'undefined') ? installedSkillNames : [];
             
-            // Group
-            const groups = {};
-            data.forEach(s => {
-                if(!groups[s.category]) groups[s.category] = [];
-                groups[s.category].push(s);
+            data.forEach(skill => {
+                const isInstalled = installed.includes(skill.name);
+                const card = document.createElement('div');
+                card.className = `skill-card ${isInstalled ? 'installed' : ''}`;
+                card.innerHTML = `
+                    <div class="skill-name" style="${isInstalled ? 'color:#00ff00' : ''}">${isInstalled ? '✅ ' : ''}${skill.name}</div>
+                    <div class="skill-desc">${skill.desc || skill.category}</div>
+                `;
+                card.onclick = () => alert(`${skill.name}\nStatus: ${isInstalled ? 'ACTIVE' : 'AVAILABLE'}`);
+                container.appendChild(card);
             });
-            
-            // Render
-            // 1. Installed
-            const instHeader = document.createElement('div');
-            instHeader.className = 'skills-category-header';
-            instHeader.innerHTML = '✅ УСТАНОВЛЕНЫ';
-            instHeader.style.color = '#2ecc71';
-            grid.appendChild(instHeader);
-            
-            data.filter(s => installed.includes(s.name)).forEach(s => {
-                grid.appendChild(createCard(s, true));
-            });
-            
-            // 2. Others by category
-            Object.keys(groups).forEach(cat => {
-                const catHeader = document.createElement('div');
-                catHeader.className = 'skills-category-header';
-                catHeader.textContent = cat;
-                grid.appendChild(catHeader);
-                
-                groups[cat].forEach(s => {
-                    if(!installed.includes(s.name)) {
-                        grid.appendChild(createCard(s, false));
-                    }
-                });
-            });
-        }
-        
-        function createCard(skill, isInstalled) {
-            const el = document.createElement('div');
-            el.className = 'skill-card';
-            if(isInstalled) el.style.borderColor = '#2ecc71';
-            
-            el.innerHTML = `
-                <span class="skill-icon">${skill.icon || '📦'}</span>
-                <div class="skill-name">${skill.name}</div>
-                <div class="skill-desc">${skill.desc || ''}</div>
-            `;
-            el.onclick = () => alert(skill.name + (isInstalled ? " (Установлен)" : " (Доступен)"));
-            return el;
+            skillsRendered = true;
         }
         
         // Notes
-        const NOTES_KEY = 'openclaw_notes_v5';
+        const NOTES_KEY = 'openclaw_logs_v6';
         document.getElementById('notesArea').value = localStorage.getItem(NOTES_KEY) || '';
         function saveNotes() {
             localStorage.setItem(NOTES_KEY, document.getElementById('notesArea').value);
-            alert('Сохранено! ✅');
+            if(tg) tg.showPopup({message: 'LOG SAVED'});
+            else alert('LOG SAVED');
         }
-        function clearNotes() {
-            if(confirm('Точно очистить?')) {
-                document.getElementById('notesArea').value = '';
-                localStorage.removeItem(NOTES_KEY);
-            }
-        }
+        
+        // Thoughts loop
+        const phrases = [
+            "Сканирую сеть...",
+            "Оптимизация процессов 99%",
+            "Подключена к базе данных VNVNC",
+            "Мониторинг конкурентов активен",
+            "Ожидаю ввод данных...",
+            "Системы безопасности: НОРМА"
+        ];
+        let pIndex = 0;
+        setInterval(() => {
+            pIndex = (pIndex + 1) % phrases.length;
+            document.getElementById('thought-text').innerText = phrases[pIndex];
+        }, 5000);
+        
     </script>
 </body>
 </html>
