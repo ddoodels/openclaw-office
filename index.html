@@ -2,15 +2,17 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>🦞 OpenClaw Office - Клавдия</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
         
         :root {
@@ -36,6 +38,7 @@
             position: relative;
         }
         
+        /* Navigation */
         .nav {
             position: fixed;
             top: 20px;
@@ -49,8 +52,8 @@
         }
         
         .nav-btn {
-            background: rgba(26, 26, 46, 0.9);
-            border: 1px solid var(--gold);
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(212, 175, 55, 0.5);
             color: var(--gold);
             padding: 10px 20px;
             border-radius: 25px;
@@ -66,8 +69,10 @@
         .nav-btn:hover, .nav-btn.active {
             background: var(--gold);
             color: var(--dark);
+            border-color: var(--gold);
         }
         
+        /* Sections */
         .section {
             display: none;
             width: 100%;
@@ -87,550 +92,95 @@
             to { opacity: 1; }
         }
         
-        /* ===== OFFICE - ANIME STYLE ===== */
+        /* ===== OFFICE - REALISTIC ===== */
         .office {
-            background: linear-gradient(180deg, #0f0f1a 0%, #1a1a2e 50%, #0a0a0f 100%);
+            background: #000;
             position: relative;
             overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
-        /* Panoramic Window */
-        .window {
+        /* Main Image */
+        .office-bg {
             position: absolute;
             top: 0;
-            right: 0;
-            width: 70%;
-            height: 75%;
-            background: linear-gradient(180deg, rgba(30,30,60,0.9) 0%, rgba(10,10,30,0.95) 100%);
-            border-left: 4px solid rgba(212, 175, 55, 0.4);
-            border-bottom: 4px solid rgba(212, 175, 55, 0.4);
-            overflow: hidden;
-        }
-        
-        .window::before {
-            content: '';
-            position: absolute;
+            left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                radial-gradient(ellipse at 20% 40%, rgba(255, 200, 100, 0.2) 0%, transparent 50%),
-                radial-gradient(ellipse at 70% 30%, rgba(100, 150, 255, 0.15) 0%, transparent 40%),
-                radial-gradient(ellipse at 50% 70%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
-            animation: cityGlow 10s ease-in-out infinite;
+            background-image: url('klavdia.png');
+            background-size: cover;
+            background-position: center;
+            animation: breathe 8s ease-in-out infinite;
+            transform-origin: center center;
+        }
+
+        /* Breathe animation for image */
+        @keyframes breathe {
+            0% { transform: scale(1.0); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1.0); }
         }
         
-        @keyframes cityGlow {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 0.9; }
+        /* Overlay effects */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.4) 100%);
+            pointer-events: none;
         }
-        
+
         /* Rain */
         .rain {
             position: absolute;
             width: 100%;
             height: 100%;
-            background: repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(255,255,255,0.03) 3px, rgba(255,255,255,0.03) 4px);
-            animation: rainFall 0.8s linear infinite;
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABZJREFUeNpi/P//PwMIMAIx40Qlz2CAAQEA/04Ew2t44u4AAAAASUVORK5CYII=');
+            opacity: 0.1;
+            animation: rain 0.3s linear infinite;
+            pointer-events: none;
         }
         
-        @keyframes rainFall {
-            from { transform: translateX(-5px); }
-            to { transform: translateX(0); }
+        @keyframes rain {
+            from { background-position: 0 0; }
+            to { background-position: -20px 20px; }
         }
-        
-        /* Executive Desk */
-        .desk {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 85%;
-            max-width: 900px;
-            height: 300px;
-            background: linear-gradient(180deg, rgba(40,40,50,0.95) 0%, rgba(20,20,30,0.98) 100%);
-            border-radius: 20px 20px 0 0;
-            box-shadow: 0 -30px 80px rgba(0,0,0,0.6);
-        }
-        
-        .desk::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 30px;
-            right: 30px;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.4), transparent);
-        }
-        
-        /* MacBook */
-        .macbook {
-            position: absolute;
-            bottom: 220px;
-            left: 58%;
-            transform: translateX(-50%);
-            width: 240px;
-            height: 160px;
-            z-index: 10;
-        }
-        
-        .macbook-screen {
-            width: 220px;
-            height: 140px;
-            background: linear-gradient(135deg, #0a0a15 0%, #151525 100%);
-            border: 2px solid #3a3a4a;
-            border-radius: 12px;
-            margin: 0 auto;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .macbook-screen::after {
-            content: '';
-            position: absolute;
-            top: 8px;
-            left: 8px;
-            right: 8px;
-            bottom: 8px;
-            background: linear-gradient(180deg, rgba(100, 200, 255, 0.15) 0%, rgba(100, 200, 255, 0.05) 100%);
-            border-radius: 6px;
-            animation: screenPulse 4s ease-in-out infinite;
-        }
-        
-        @keyframes screenPulse {
-            0%, 100% { opacity: 0.7; }
-            50% { opacity: 1; }
-        }
-        
-        .macbook-keyboard {
-            width: 240px;
-            height: 14px;
-            background: linear-gradient(180deg, #4a4a5a 0%, #3a3a4a 100%);
-            border-radius: 0 0 6px 6px;
-            margin: 0 auto;
-        }
-        
-        /* Coffee */
-        .coffee {
-            position: absolute;
-            bottom: 230px;
-            right: 32%;
-            z-index: 11;
-        }
-        
-        .cup {
-            width: 40px;
-            height: 45px;
-            background: linear-gradient(180deg, #f5f5f5 0%, #e5e5e5 100%);
-            border-radius: 0 0 50% 50%;
-            position: relative;
-        }
-        
-        .cup::before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: 0;
-            right: 0;
-            height: 10px;
-            background: #1a1a1a;
-            border-radius: 50%;
-        }
-        
-        .steam {
-            position: absolute;
-            top: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 30px;
-            background: rgba(255,255,255,0.25);
-            border-radius: 50%;
-            filter: blur(10px);
-            animation: steamUp 3s ease-out infinite;
-        }
-        
-        @keyframes steamUp {
-            0% { opacity: 0; transform: translateX(-50%) translateY(0); }
-            50% { opacity: 0.6; }
-            100% { opacity: 0; transform: translateX(-50%) translateY(-25px); }
-        }
-        
-        /* ===== ANIME STYLE KLAVDIA ===== */
-        .klavdia {
-            position: absolute;
-            bottom: 40px;
-            left: 45%;
-            transform: translateX(-50%);
-            width: 320px;
-            height: 580px;
-            z-index: 20;
-        }
-        
-        /* Body - sitting on desk edge, confident pose */
-        .klavdia-body {
-            position: absolute;
-            bottom: 280px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 180px;
-            height: 280px;
-        }
-        
-        /* Torso - fitted blazer */
-        .torso {
-            width: 160px;
-            height: 200px;
-            background: linear-gradient(180deg, #1e1e2e 0%, #0e0e1e 100%);
-            border-radius: 20px 20px 15px 15px;
-            margin: 0 auto;
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        
-        /* White blouse - visible V-neck */
-        .blouse {
-            position: absolute;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 70px;
-            height: 90px;
-            background: linear-gradient(180deg, #ffffff 0%, #f0f0f0 100%);
-            clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
-            border-radius: 5px;
-        }
-        
-        /* Arms - confident pose */
-        .arm {
-            position: absolute;
-            width: 50px;
-            height: 140px;
-            background: linear-gradient(180deg, #1e1e2e 0%, #0e0e1e 100%);
-            border-radius: 25px;
-            top: 20px;
-        }
-        
-        .arm.left {
-            left: -30px;
-            transform: rotate(-25deg);
-            transform-origin: top center;
-            animation: armIdle 4s ease-in-out infinite;
-        }
-        
-        .arm.right {
-            right: -30px;
-            transform: rotate(15deg);
-            transform-origin: top center;
-            animation: armIdle 4s ease-in-out infinite 2s;
-        }
-        
-        @keyframes armIdle {
-            0%, 100% { transform: rotate(-25deg) translateY(0); }
-            50% { transform: rotate(-28deg) translateY(-3px); }
-        }
-        
-        .hand {
-            position: absolute;
-            bottom: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 32px;
-            height: 38px;
-            background: linear-gradient(180deg, #f8e8d8 0%, #e8d8c8 100%);
-            border-radius: 50%;
-        }
-        
-        /* Legs - crossed at ankle, sitting on desk */
-        .legs {
-            position: absolute;
-            bottom: 150px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 140px;
-            height: 200px;
-            z-index: 15;
-        }
-        
-        .leg {
-            position: absolute;
-            width: 48px;
-            height: 180px;
-            background: linear-gradient(180deg, #1e1e2e 0%, #0e0e1e 100%);
-            border-radius: 24px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-        
-        .leg.left {
-            left: 20px;
-            transform: rotate(-8deg);
-            z-index: 2;
-        }
-        
-        .leg.right {
-            right: 20px;
-            transform: rotate(5deg) translateY(-20px);
-            z-index: 1;
-        }
-        
-        /* Shoes - stiletto heels */
-        .shoe {
-            position: absolute;
-            bottom: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 45px;
-            height: 70px;
-            background: linear-gradient(180deg, #0a0a0a 0%, #000 100%);
-            border-radius: 50% 50% 20% 20%;
-            box-shadow: 0 8px 15px rgba(0,0,0,0.6);
-        }
-        
-        /* Head - anime style */
-        .klavdia-head {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 130px;
-            height: 160px;
-            z-index: 30;
-        }
-        
-        /* Platinum blonde hair */
-        .hair {
-            position: absolute;
-            top: -15px;
-            left: -25px;
-            right: -25px;
-            height: 90px;
-            background: linear-gradient(180deg, #f5ecd5 0%, #e5dcc5 50%, #d5ccc5 100%);
-            border-radius: 50% 50% 40% 40%;
-            z-index: 25;
-            animation: hairWave 5s ease-in-out infinite;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-        }
-        
-        @keyframes hairWave {
-            0%, 100% { transform: rotate(-1deg) scale(1); }
-            50% { transform: rotate(1deg) scale(1.02); }
-        }
-        
-        .hair::before, .hair::after {
-            content: '';
-            position: absolute;
-            background: linear-gradient(180deg, #f5ecd5 0%, #e5dcc5 100%);
-            border-radius: 50%;
-        }
-        
-        .hair::before {
-            width: 55px;
-            height: 120px;
-            left: -10px;
-            top: 20px;
-            transform: rotate(-15deg);
-        }
-        
-        .hair::after {
-            width: 55px;
-            height: 120px;
-            right: -10px;
-            top: 20px;
-            transform: rotate(15deg);
-        }
-        
-        /* Face - anime style */
-        .face {
-            width: 110px;
-            height: 130px;
-            background: linear-gradient(180deg, #fff5f0 0%, #f5e5e0 100%);
-            border-radius: 55px 55px 50px 50px;
-            margin: 20px auto 0;
-            position: relative;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            animation: faceBreathe 4s ease-in-out infinite;
-        }
-        
-        @keyframes faceBreathe {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-2px); }
-        }
-        
-        /* Anime eyes */
-        .eyes {
-            position: absolute;
-            top: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 85px;
-            display: flex;
-            justify-content: space-between;
-            z-index: 32;
-        }
-        
-        .eye {
-            width: 38px;
-            height: 26px;
-            background: #fff;
-            border-radius: 50%;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(0,0,0,0.1);
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .eye::before {
-            content: '';
-            position: absolute;
-            top: -1px;
-            left: 0;
-            right: 0;
-            height: 6px;
-            background: #1a1a1a;
-            border-radius: 50% 50% 0 0;
-        }
-        
-        .pupil {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 18px;
-            height: 18px;
-            background: radial-gradient(circle at 30% 30%, #6a9fd5 0%, #4a7fb5 40%, #2a5f95 100%);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: transform 0.15s ease-out;
-        }
-        
-        .pupil::after {
-            content: '';
-            position: absolute;
-            top: 3px;
-            left: 4px;
-            width: 6px;
-            height: 6px;
-            background: rgba(255,255,255,0.9);
-            border-radius: 50%;
-        }
-        
-        /* Glasses - designer style */
-        .glasses {
-            position: absolute;
-            top: 48px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 105px;
-            height: 32px;
-            z-index: 35;
-            animation: adjustGlasses 12s ease-in-out infinite;
-        }
-        
-        @keyframes adjustGlasses {
-            0%, 94%, 100% { transform: translateX(-50%) translateY(0); }
-            97% { transform: translateX(-50%) translateY(-3px); }
-        }
-        
-        .glasses-frame {
-            position: absolute;
-            width: 46px;
-            height: 28px;
-            border: 3px solid #1a1a1a;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.12);
-            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-        }
-        
-        .glasses-frame:first-child { left: 0; }
-        .glasses-frame:last-child { right: 0; }
-        
-        .glasses-bridge {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 12px;
-            height: 3px;
-            background: #1a1a1a;
-        }
-        
-        /* Eyelashes */
-        .eyelashes {
-            position: absolute;
-            top: 48px;
-            width: 100%;
-            z-index: 33;
-        }
-        
-        /* Crimson lips */
-        .lips {
-            position: absolute;
-            bottom: 28px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 42px;
-            height: 20px;
-            background: linear-gradient(180deg, #d46585 0%, #b34565 100%);
-            border-radius: 0 0 50% 50%;
-            animation: lipsSmile 4s ease-in-out infinite;
-        }
-        
-        @keyframes lipsSmile {
-            0%, 100% { transform: translateX(-50%) scale(1); }
-            50% { transform: translateX(-50%) scale(1.05); }
-        }
-        
-        /* Blush */
-        .blush {
-            position: absolute;
-            top: 75px;
-            width: 28px;
-            height: 16px;
-            background: rgba(212, 101, 133, 0.35);
-            border-radius: 50%;
-            filter: blur(3px);
-        }
-        
-        .blush.left { left: 12px; }
-        .blush.right { right: 12px; }
         
         /* Thought bubble */
         .thought-bubble {
             position: absolute;
-            top: -70px;
-            right: -160px;
-            background: rgba(255, 255, 255, 0.98);
-            padding: 22px 28px;
-            border-radius: 22px;
-            max-width: 260px;
+            top: 20%;
+            right: 15%;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px 25px;
+            border-radius: 20px;
+            border-bottom-left-radius: 0;
+            max-width: 250px;
             color: #1a1a2e;
             font-size: 14px;
             line-height: 1.5;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.35);
-            animation: bubbleFloat 6s ease-in-out infinite;
-            z-index: 40;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            animation: float 4s ease-in-out infinite;
+            z-index: 20;
+            opacity: 0.95;
         }
         
-        @keyframes bubbleFloat {
-            0%, 100% { transform: translateY(0) rotate(-1deg); }
-            50% { transform: translateY(-12px) rotate(1deg); }
-        }
-        
-        .thought-bubble::before {
-            content: '';
-            position: absolute;
-            bottom: -18px;
-            left: 30px;
-            border-left: 18px solid transparent;
-            border-right: 18px solid transparent;
-            border-top: 18px solid rgba(255, 255, 255, 0.98);
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
         
         .thought-label {
             color: #c44569;
-            font-size: 12px;
-            font-weight: 600;
+            font-size: 11px;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 10px;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
         }
         
         /* Info Panel */
@@ -638,54 +188,42 @@
             position: absolute;
             bottom: 30px;
             left: 30px;
-            background: rgba(26, 26, 46, 0.95);
-            backdrop-filter: blur(15px);
-            padding: 28px;
-            border-radius: 18px;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            max-width: 300px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 280px;
+            z-index: 20;
         }
         
         .info-title {
             color: var(--gold);
             font-family: 'Cormorant Garamond', serif;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 600;
-            margin-bottom: 18px;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
         
         .info-stat {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            font-size: 14px;
-        }
-        
-        .info-stat:last-child {
-            border-bottom: none;
-        }
-        
-        .info-label {
-            color: rgba(255,255,255,0.6);
-        }
-        
-        .info-value {
-            color: #fff;
-            font-weight: 500;
+            padding: 5px 0;
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
         }
         
         .status-dot {
             display: inline-block;
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             background: #2ecc71;
             border-radius: 50%;
-            margin-right: 10px;
+            margin-right: 8px;
             animation: pulse 2s infinite;
         }
         
@@ -694,35 +232,130 @@
             50% { opacity: 0.5; transform: scale(1.3); }
         }
         
+        /* ===== SKILLS & NOTES (Dark theme) ===== */
+        .skills, .notes {
+            background: #0f0f12;
+            padding: 80px 20px 20px;
+            overflow-y: auto;
+        }
+        
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            color: var(--gold);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .skill-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-card:hover {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: var(--gold);
+            transform: translateY(-3px);
+        }
+
+        .skill-icon { font-size: 24px; display: block; margin-bottom: 10px; }
+        .skill-name { font-size: 13px; font-weight: 500; }
+        .skill-desc { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 5px; }
+        
+        .skills-category-header {
+            grid-column: 1 / -1;
+            margin-top: 20px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            color: var(--gold);
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Notes */
+        .notes-container {
+            max-width: 800px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .notes-toolbar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .notes-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .notes-btn:hover {
+            background: var(--gold);
+            color: #000;
+            border-color: var(--gold);
+        }
+        
+        .notes-area {
+            flex: 1;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 20px;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 15px;
+            line-height: 1.6;
+            resize: none;
+            outline: none;
+        }
+        
+        .notes-area:focus {
+            border-color: var(--gold);
+        }
+        
         /* Mobile */
         @media (max-width: 768px) {
-            .klavdia {
-                transform: translateX(-50%) scale(0.75);
-                bottom: 20px;
+            .office-bg {
+                background-position: center bottom;
+                transform-origin: center bottom;
             }
-            
-            .nav {
-                top: 10px;
+            .thought-bubble {
+                top: 15%;
+                right: 5%;
+                left: 5%;
+                max-width: none;
+                width: 90%;
+            }
+            .info-panel {
+                bottom: 10px;
                 left: 10px;
                 right: 10px;
-            }
-            
-            .nav-btn {
-                padding: 8px 14px;
-                font-size: 10px;
-            }
-            
-            .info-panel {
-                left: 10px;
-                bottom: 10px;
-                padding: 18px;
-                max-width: 220px;
-            }
-            
-            .thought-bubble {
-                right: -120px;
-                max-width: 180px;
-                font-size: 12px;
+                max-width: none;
             }
         }
     </style>
@@ -735,161 +368,166 @@
             <button class="nav-btn" onclick="showSection('notes')">📝 Заметки</button>
         </nav>
         
+        <!-- OFFICE -->
         <section id="office" class="section office active">
-            <div class="window">
-                <div class="rain"></div>
-            </div>
+            <div class="office-bg"></div>
+            <div class="rain"></div>
+            <div class="overlay"></div>
             
-            <div class="desk"></div>
-            
-            <div class="macbook">
-                <div class="macbook-screen"></div>
-                <div class="macbook-keyboard"></div>
-            </div>
-            
-            <div class="coffee">
-                <div class="steam"></div>
-                <div class="cup"></div>
-            </div>
-            
-            <div class="klavdia">
-                <div class="thought-bubble" id="thought">
-                    <div class="thought-label">💭 Работа</div>
-                    <div id="thought-text">Создам отчёт за 5 минут!</div>
-                </div>
-                
-                <div class="legs">
-                    <div class="leg left"><div class="shoe"></div></div>
-                    <div class="leg right"><div class="shoe"></div></div>
-                </div>
-                
-                <div class="klavdia-body">
-                    <div class="torso"><div class="blouse"></div></div>
-                    
-                    <div class="arm left"><div class="hand"></div></div>
-                    <div class="arm right"><div class="hand"></div></div>
-                </div>
-                
-                <div class="klavdia-head">
-                    <div class="hair"></div>
-                    
-                    <div class="face">
-                        <div class="eyes">
-                            <div class="eye"><div class="pupil"></div></div>
-                            <div class="eye"><div class="pupil"></div></div>
-                        </div>
-                        
-                        <div class="glasses">
-                            <div class="glasses-frame"></div>
-                            <div class="glasses-bridge"></div>
-                            <div class="glasses-frame"></div>
-                        </div>
-                        
-                        <div class="blush left"></div>
-                        <div class="blush right"></div>
-                        <div class="lips"></div>
-                    </div>
-                </div>
+            <div class="thought-bubble" id="thought">
+                <div class="thought-label">💭 Мысли</div>
+                <div id="thought-text">Привет! Я Клавдия.<br>Твой личный бизнес-ассистент.</div>
             </div>
             
             <div class="info-panel">
                 <div class="info-title">🦞 OpenClaw Office</div>
                 <div class="info-stat">
-                    <span class="info-label"><span class="status-dot"></span>Статус:</span>
-                    <span class="info-value">Онлайн</span>
+                    <span><span class="status-dot"></span>Статус</span>
+                    <span>Онлайн</span>
                 </div>
                 <div class="info-stat">
-                    <span class="info-label">Скиллов:</span>
-                    <span class="info-value">114</span>
+                    <span>Скиллов</span>
+                    <span>114</span>
                 </div>
                 <div class="info-stat">
-                    <span class="info-label">Настроение:</span>
-                    <span class="info-value">Рабочее 💼</span>
-                </div>
-                <div class="info-stat">
-                    <span class="info-label">Время:</span>
-                    <span class="info-value" id="clock">--:--</span>
+                    <span>Время</span>
+                    <span id="clock">--:--</span>
                 </div>
             </div>
         </section>
         
+        <!-- SKILLS -->
         <section id="skills" class="section skills">
-            <div style="padding: 100px 30px; text-align: center;">
-                <h2 style="color: #D4AF37; font-family: 'Cormorant Garamond', serif; font-size: 32px; margin-bottom: 20px;">📚 Каталог скиллов</h2>
-                <div style="display: flex; gap: 15px; justify-content: center; margin-bottom: 30px;">
-                    <div style="background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); color: #000; padding: 10px 20px; border-radius: 20px; font-weight: 600;">✅ 19 установлено</div>
-                    <div style="background: linear-gradient(135deg, #666 0%, #444 100%); color: #fff; padding: 10px 20px; border-radius: 20px; font-weight: 600;">📦 113 в репозитории</div>
-                </div>
-                
-                <p style="color: #888; font-size: 14px;">
-                    Из <a href="https://github.com/kirniy/claude-skills-backup" target="_blank" style="color: #D4AF37;">kirniy/claude-skills-backup</a>
-                </p>
+            <div class="section-title">📚 Каталог скиллов</div>
+            <div class="skills-grid" id="skillsGrid">
+                <!-- JS will load skills here -->
             </div>
         </section>
         
+        <!-- NOTES -->
         <section id="notes" class="section notes">
-            <div style="padding: 100px 30px; max-width: 800px; margin: 0 auto;">
-                <h2 style="color: #D4AF37; font-family: 'Cormorant Garamond', serif; font-size: 28px; margin-bottom: 20px;">📝 Заметки</h2>
-                
-                <textarea style="width: 100%; height: 400px; background: rgba(255,255,255,0.05); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 15px; padding: 20px; color: #fff; font-size: 15px; resize: none;"
-placeholder="Здесь можно писать идеи, планы, заметки..."></textarea>
+            <div class="notes-container">
+                <div class="section-title">📝 Заметки</div>
+                <div class="notes-toolbar">
+                    <button class="notes-btn" onclick="saveNotes()">💾 Сохранить</button>
+                    <button class="notes-btn" onclick="clearNotes()">🗑 Очистить</button>
+                </div>
+                <textarea class="notes-area" id="notesArea" placeholder="Пиши сюда идеи..."></textarea>
             </div>
         </section>
     </div>
     
+    <!-- SKILLS DATA -->
+    <script src="skills_repo_data.js"></script>
+    
     <script>
+        // Telegram
+        let tg = window.Telegram?.WebApp;
+        if (tg) { tg.expand(); tg.ready(); }
+        
         // Clock
         function updateClock() {
             const now = new Date();
-            const time = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-            document.getElementById('clock').textContent = time;
+            document.getElementById('clock').textContent = now.toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'});
         }
         setInterval(updateClock, 1000);
         updateClock();
         
-        // Section navigation
-        function showSection(sectionId) {
+        // Navigation
+        function showSection(id) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            
-            document.getElementById(sectionId).classList.add('active');
+            document.getElementById(id).classList.add('active');
             event.target.classList.add('active');
+            
+            if(id === 'skills') loadSkills();
         }
         
-        // Eyes follow cursor
-        document.addEventListener('mousemove', (e) => {
-            const pupils = document.querySelectorAll('.pupil');
-            pupils.forEach(pupil => {
-                const rect = pupil.parentElement.getBoundingClientRect();
-                const centerX = rect.left + rect.width / 2;
-                const centerY = rect.top + rect.height / 2;
-                
-                const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
-                const distance = Math.min(5, Math.hypot(e.clientX - centerX, e.clientY - centerY) / 50);
-                
-                const x = Math.cos(angle) * distance;
-                const y = Math.sin(angle) * distance;
-                
-                pupil.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
-            });
-        });
-        
-        // Random thoughts
+        // Thoughts rotation
         const thoughts = [
-            { label: '💭 Работа', text: 'Создам отчёт за 5 минут!' },
-            { label: '✨ Скиллы', text: 'У меня 114 скиллов в арсенале!' },
-            { label: '💼 Проекты', text: 'Готова помочь с VNVNC!' },
-            { label: '☕ Кофе', text: 'Заряжена и готова!' },
-            { label: '👀 Слежу', text: 'Глаза следят за курсором!' }
+            "Анализирую данные... 📊",
+            "Готова к новым задачам! 💼",
+            "Проверяю отчёты Яндекс.Директ 📉",
+            "Мониторю конкурентов 👀",
+            "Всё под контролем 👌",
+            "Жду твоих указаний ⌨️"
         ];
-        
-        let thoughtIndex = 0;
+        let tIndex = 0;
         setInterval(() => {
-            thoughtIndex = (thoughtIndex + 1) % thoughts.length;
-            const thought = thoughts[thoughtIndex];
-            document.querySelector('.thought-label').textContent = thought.label;
-            document.getElementById('thought-text').textContent = thought.text;
-        }, 6000);
+            tIndex = (tIndex + 1) % thoughts.length;
+            document.getElementById('thought-text').innerHTML = thoughts[tIndex];
+        }, 8000);
+        
+        // Skills Loader
+        function loadSkills() {
+            const grid = document.getElementById('skillsGrid');
+            if(grid.children.length > 0) return;
+            
+            // Используем данные из skills_repo_data.js (если есть) или фолбек
+            const data = (typeof allSkillsFromRepo !== 'undefined') ? allSkillsFromRepo : [];
+            const installed = (typeof installedSkillNames !== 'undefined') ? installedSkillNames : [];
+            
+            // Group
+            const groups = {};
+            data.forEach(s => {
+                if(!groups[s.category]) groups[s.category] = [];
+                groups[s.category].push(s);
+            });
+            
+            // Render
+            // 1. Installed
+            const instHeader = document.createElement('div');
+            instHeader.className = 'skills-category-header';
+            instHeader.innerHTML = '✅ УСТАНОВЛЕНЫ';
+            instHeader.style.color = '#2ecc71';
+            grid.appendChild(instHeader);
+            
+            data.filter(s => installed.includes(s.name)).forEach(s => {
+                grid.appendChild(createCard(s, true));
+            });
+            
+            // 2. Others by category
+            Object.keys(groups).forEach(cat => {
+                const catHeader = document.createElement('div');
+                catHeader.className = 'skills-category-header';
+                catHeader.textContent = cat;
+                grid.appendChild(catHeader);
+                
+                groups[cat].forEach(s => {
+                    if(!installed.includes(s.name)) {
+                        grid.appendChild(createCard(s, false));
+                    }
+                });
+            });
+        }
+        
+        function createCard(skill, isInstalled) {
+            const el = document.createElement('div');
+            el.className = 'skill-card';
+            if(isInstalled) el.style.borderColor = '#2ecc71';
+            
+            el.innerHTML = `
+                <span class="skill-icon">${skill.icon || '📦'}</span>
+                <div class="skill-name">${skill.name}</div>
+                <div class="skill-desc">${skill.desc || ''}</div>
+            `;
+            el.onclick = () => alert(skill.name + (isInstalled ? " (Установлен)" : " (Доступен)"));
+            return el;
+        }
+        
+        // Notes
+        const NOTES_KEY = 'openclaw_notes_v5';
+        document.getElementById('notesArea').value = localStorage.getItem(NOTES_KEY) || '';
+        function saveNotes() {
+            localStorage.setItem(NOTES_KEY, document.getElementById('notesArea').value);
+            alert('Сохранено! ✅');
+        }
+        function clearNotes() {
+            if(confirm('Точно очистить?')) {
+                document.getElementById('notesArea').value = '';
+                localStorage.removeItem(NOTES_KEY);
+            }
+        }
     </script>
 </body>
 </html>
