@@ -15,6 +15,8 @@
             --neon-pink: #ff00aa;
             --neon-gold: #ffd700;
             --glass: rgba(0, 0, 0, 0.6);
+            --success: #00ff88;
+            --warning: #ffaa00;
         }
         
         body {
@@ -93,48 +95,12 @@
             50% { transform: scale(1.2); opacity: 0.8; }
         }
         
-        /* Door - left side */
-        .hotspot-door {
-            left: 5%;
-            top: 35%;
-            width: 60px;
-            height: 120px;
-        }
-        
-        /* Window - right side */
-        .hotspot-window {
-            right: 10%;
-            top: 25%;
-            width: 80px;
-            height: 100px;
-        }
-        
-        /* Desk - bottom center */
-        .hotspot-desk {
-            left: 30%;
-            bottom: 20%;
-            width: 100px;
-            height: 60px;
-        }
-        
-        /* Regenerate - top right */
-        .hotspot-regen {
-            right: 5%;
-            top: 5%;
-            width: 50px;
-            height: 50px;
-            background: rgba(255,0,170,0.2);
-            border: 2px solid var(--neon-pink);
-        }
-        
-        .hotspot-regen::before {
-            background: radial-gradient(circle, rgba(255,0,170,0.4) 0%, transparent 70%);
-        }
-        
-        .hotspot-regen::after {
-            color: var(--neon-pink);
-            text-shadow: 0 0 10px var(--neon-pink);
-        }
+        .hotspot-door { left: 5%; top: 35%; width: 60px; height: 120px; }
+        .hotspot-window { right: 10%; top: 25%; width: 80px; height: 100px; }
+        .hotspot-desk { left: 30%; bottom: 20%; width: 100px; height: 60px; }
+        .hotspot-regen { right: 5%; top: 5%; width: 50px; height: 50px; background: rgba(255,0,170,0.2); border: 2px solid var(--neon-pink); }
+        .hotspot-regen::before { background: radial-gradient(circle, rgba(255,0,170,0.4) 0%, transparent 70%); }
+        .hotspot-regen::after { color: var(--neon-pink); text-shadow: 0 0 10px var(--neon-pink); }
         
         /* Thought bubble */
         .thought-bubble {
@@ -152,31 +118,8 @@
             animation: float 3s ease-in-out infinite;
         }
         
-        .thought-bubble::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-width: 10px 10px 0;
-            border-style: solid;
-            border-color: rgba(0,243,255,0.3) transparent transparent;
-        }
-        
-        .thought-label {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 10px;
-            color: var(--neon-blue);
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .thought-text {
-            font-size: 14px;
-            line-height: 1.4;
-            color: #fff;
-        }
+        .thought-label { font-family: 'Orbitron', sans-serif; font-size: 10px; color: var(--neon-blue); margin-bottom: 5px; text-transform: uppercase; }
+        .thought-text { font-size: 14px; line-height: 1.4; color: #fff; }
         
         @keyframes float {
             0%, 100% { transform: translateX(-50%) translateY(0); }
@@ -214,15 +157,8 @@
             transition: all 0.3s;
         }
         
-        .nav-btn.active {
-            color: var(--neon-blue);
-        }
-        
-        .nav-btn svg {
-            width: 24px;
-            height: 24px;
-            fill: currentColor;
-        }
+        .nav-btn.active { color: var(--neon-blue); }
+        .nav-btn svg { width: 24px; height: 24px; fill: currentColor; }
         
         /* Overlay Sections */
         .overlay {
@@ -240,9 +176,7 @@
             padding-bottom: 100px;
         }
         
-        .overlay.active {
-            transform: translateY(0);
-        }
+        .overlay.active { transform: translateY(0); }
         
         .overlay-header {
             display: flex;
@@ -252,11 +186,7 @@
             padding-top: env(safe-area-inset-top);
         }
         
-        .overlay-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 20px;
-            color: var(--neon-gold);
-        }
+        .overlay-title { font-family: 'Orbitron', sans-serif; font-size: 20px; color: var(--neon-gold); }
         
         .close-btn {
             width: 40px;
@@ -269,56 +199,173 @@
             cursor: pointer;
         }
         
-        /* Skills Categories */
-        .category-title {
+        /* Skills Marketplace Styles */
+        .skills-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+        
+        .skills-tab {
+            flex-shrink: 0;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 25px;
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .skills-tab.active {
+            background: rgba(0, 243, 255, 0.15);
+            border-color: var(--neon-blue);
+            color: var(--neon-blue);
+        }
+        
+        .skills-category-title {
             font-family: 'Orbitron', sans-serif;
             font-size: 12px;
             color: var(--neon-pink);
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             margin: 20px 0 10px;
             padding-bottom: 5px;
             border-bottom: 1px solid rgba(255,0,170,0.3);
         }
         
-        .category-title.installed {
-            color: #00ff88;
+        .skills-category-title.installed {
+            color: var(--success);
             border-color: rgba(0,255,136,0.3);
-        }
-        
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
         }
         
         .skill-card {
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
-            padding: 15px;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
             cursor: pointer;
             transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
         }
         
+        .skill-card:active { transform: scale(0.98); }
+        
         .skill-card.installed {
-            border-color: #00ff88;
+            border-color: rgba(0,255,136,0.3);
             background: rgba(0,255,136,0.05);
         }
         
-        .skill-card:active {
-            transform: scale(0.95);
+        .skill-card.installed::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--success);
+        }
+        
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
         }
         
         .skill-name {
-            font-size: 13px;
+            font-size: 16px;
             font-weight: 600;
-            margin-bottom: 4px;
+            color: #fff;
+        }
+        
+        .skill-card.installed .skill-name {
+            color: var(--success);
+        }
+        
+        .skill-badge {
+            font-size: 10px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        
+        .skill-badge.installed {
+            background: rgba(0,255,136,0.15);
+            color: var(--success);
+        }
+        
+        .skill-badge.available {
+            background: rgba(255,170,0,0.15);
+            color: var(--warning);
         }
         
         .skill-desc {
-            font-size: 11px;
+            font-size: 13px;
             color: rgba(255,255,255,0.6);
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+        
+        .skill-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .skill-meta {
+            font-size: 11px;
+            color: rgba(255,255,255,0.4);
+        }
+        
+        .skill-install-btn {
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink));
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            color: #000;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .skill-install-btn:active {
+            transform: scale(0.95);
+            opacity: 0.8;
+        }
+        
+        .skill-install-btn:disabled {
+            background: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.4);
+            cursor: default;
+        }
+        
+        /* Search bar */
+        .skills-search {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: #fff;
+            font-size: 15px;
+            margin-bottom: 15px;
+            outline: none;
+        }
+        
+        .skills-search::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+        
+        .skills-search:focus {
+            border-color: var(--neon-blue);
         }
         
         /* Notes */
@@ -383,83 +430,61 @@
             </button>
         </nav>
         
-        <!-- Skills Overlay -->
+        <!-- SKILLS MARKETPLACE OVERLAY -->
         <div class="overlay" id="skills-overlay">
             <div class="overlay-header">
-                <div class="overlay-title">📚 БАЗА СКИЛЛОВ</div>
+                <div class="overlay-title">🛒 МАГАЗИН СКИЛЛОВ</div>
                 <button class="close-btn" onclick="closeAll()">✕</button>
             </div>
-            <div id="skills-content"></div>
+            
+            <!-- Search -->
+            <input type="text" class="skills-search" placeholder="🔍 Поиск скиллов..." id="skillSearch" onkeyup="filterSkills()">
+            
+            <!-- Tabs -->
+            <div class="skills-tabs">
+                <button class="skills-tab active" onclick="switchTab('all')" id="tab-all">Все</button>
+                <button class="skills-tab" onclick="switchTab('installed')" id="tab-installed">✅ Установлены</button>
+                <button class="skills-tab" onclick="switchTab('available')" id="tab-available">📦 Доступны</button>
+            </div>
+            
+            <!-- Skills List -->
+            <div id="skills-list">
+                <!-- Filled by JavaScript -->
+            </div>
         </div>
         
-        <!-- Notes Overlay -->
+        <!-- NOTES OVERLAY -->
         <div class="overlay" id="notes-overlay">
             <div class="overlay-header">
                 <div class="overlay-title">📝 ЗАМЕТКИ</div>
                 <button class="close-btn" onclick="closeAll()">✕</button>
             </div>
-            <textarea class="notes-input" id="notes-area" placeholder="Введите заметку..."></textarea>
+            <div class="tg-list" id="logs-list">
+                <div class="tg-item">
+                    <div class="tg-item-icon">📋</div>
+                    <div class="tg-item-content">
+                        <div class="tg-item-title">Новая заметка</div>
+                        <div class="tg-item-subtitle">Добавить запись</div>
+                    </div>
+                </div>
+            </div>
+            <textarea class="notes-input" id="log-input" placeholder="Введите текст..." rows="3"></textarea>
             <button class="save-btn" onclick="saveNotes()">Сохранить</button>
         </div>
     </div>
     
+    <!-- DATA -->
     <script src="skills_repo_data.js"></script>
+    
     <script>
         const tg = window.Telegram?.WebApp;
         if (tg) { tg.ready(); tg.expand(); }
         
-        // Haptic
-        function haptic(type = 'light') {
-            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred(type);
-        }
-        
-        // Section navigation
-        function openSection(section) {
-            haptic('medium');
-            document.querySelectorAll('.overlay').forEach(o => o.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            
-            if (section === 'skills') {
-                document.getElementById('skills-overlay').classList.add('active');
-                renderSkills();
-            } else if (section === 'notes') {
-                document.getElementById('notes-overlay').classList.add('active');
-            }
-        }
-        
-        function closeAll() {
-            haptic('light');
-            document.querySelectorAll('.overlay').forEach(o => o.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.querySelector('.nav-btn').classList.add('active');
-        }
-        
-        // Regenerate office
-        function regenerateOffice() {
-            haptic('heavy');
-            if (tg) {
-                tg.showPopup({
-                    title: 'Генерация нового фона',
-                    message: 'Создать новое изображение офиса?',
-                    buttons: [
-                        {id: 'yes', type: 'default', text: 'Да'},
-                        {id: 'no', type: 'cancel', text: 'Отмена'}
-                    ]
-                }, (btn) => {
-                    if (btn === 'yes') {
-                        tg.showAlert('🎨 Генерация запущена...');
-                    }
-                });
-            } else {
-                alert('🎨 Здесь будет генерация нового фона');
-            }
-        }
-        
         // Thoughts rotation
         const thoughts = [
             "Анализирую данные VNVNC...",
-            "Проверяю рекламные кампании",
-            "Мониторю конкурентов 👁️",
+            "Проверяю рекламные кампании 📉",
+            "Мониторю конкурентов 👀",
             "Все системы работают нормально ✅",
             "Нужно обновить отчёт по метрикам",
             "Готова к новым задачам! ⚡"
@@ -468,86 +493,222 @@
         setInterval(() => {
             tIndex = (tIndex + 1) % thoughts.length;
             document.getElementById('thought-text').textContent = thoughts[tIndex];
-        }, 5000);
+        }, 6000);
         
-        // Render skills with categories
-        let skillsRendered = false;
+        // Navigation
+        let currentTab = 'all';
+        
+        function openSection(section) {
+            if (section === 'skills') {
+                document.getElementById('skills-overlay').classList.add('active');
+                renderSkills();
+            } else if (section === 'notes') {
+                document.getElementById('notes-overlay').classList.add('active');
+            }
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            event.currentTarget?.classList?.add('active');
+        }
+        
+        function closeAll() {
+            document.querySelectorAll('.overlay').forEach(o => o.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('.nav-btn').classList.add('active');
+        }
+        
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.skills-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById('tab-' + tab).classList.add('active');
+            renderSkills();
+        }
+        
+        // Skills data with local additions
+        const localSkills = [
+            {
+                name: "yandex-unified-analytics",
+                icon: "📊",
+                desc: "Комплексная аналитика: Директ + Метрика + Бизнес. Два режима: для маркетолога и учредителя.",
+                category: "Аналитика",
+                installed: true,
+                version: "2.0",
+                author: "VNVNC Team"
+            },
+            {
+                name: "yandex-direct-browser",
+                icon: "🔍",
+                desc: "Доступ к Яндекс.Директ через браузер без API-токенов.",
+                category: "Аналитика", 
+                installed: true,
+                version: "1.0",
+                author: "OpenClaw"
+            }
+        ];
+        
         function renderSkills() {
-            if (skillsRendered) return;
+            const container = document.getElementById('skills-list');
+            container.innerHTML = '';
             
-            const container = document.getElementById('skills-content');
+            // Combine repo skills with local
             const data = (typeof allSkillsFromRepo !== 'undefined') ? allSkillsFromRepo : [];
             const installed = (typeof installedSkillNames !== 'undefined') ? installedSkillNames : [];
             
-            // Group by category
-            const groups = {};
-            data.forEach(s => {
-                if (!groups[s.category]) groups[s.category] = [];
-                groups[s.category].push(s);
+            // Mark installed from repo
+            data.forEach(skill => {
+                skill.installed = installed.includes(skill.name);
             });
             
-            // Installed first
-            const installedSkills = data.filter(s => installed.includes(s.name));
-            if (installedSkills.length > 0) {
-                const header = document.createElement('div');
-                header.className = 'category-title installed';
-                header.textContent = '✅ Установленные (' + installedSkills.length + ')';
-                container.appendChild(header);
-                
-                const grid = document.createElement('div');
-                grid.className = 'skills-grid';
-                installedSkills.forEach(s => grid.appendChild(createSkillCard(s, true)));
-                container.appendChild(grid);
+            // Add local skills
+            const allSkills = [...localSkills, ...data.filter(s => !localSkills.find(ls => ls.name === s.name))];
+            
+            // Filter by tab
+            let filtered = allSkills;
+            if (currentTab === 'installed') {
+                filtered = allSkills.filter(s => s.installed);
+            } else if (currentTab === 'available') {
+                filtered = allSkills.filter(s => !s.installed);
             }
             
-            // Other categories
-            Object.keys(groups).forEach(cat => {
-                const catSkills = groups[cat].filter(s => !installed.includes(s.name));
-                if (catSkills.length === 0) return;
-                
-                const header = document.createElement('div');
-                header.className = 'category-title';
-                header.textContent = cat + ' (' + catSkills.length + ')';
-                container.appendChild(header);
-                
-                const grid = document.createElement('div');
-                grid.className = 'skills-grid';
-                catSkills.forEach(s => grid.appendChild(createSkillCard(s, false)));
-                container.appendChild(grid);
+            // Filter by search
+            const search = document.getElementById('skillSearch')?.value?.toLowerCase() || '';
+            if (search) {
+                filtered = filtered.filter(s => 
+                    s.name.toLowerCase().includes(search) || 
+                    (s.desc && s.desc.toLowerCase().includes(search))
+                );
+            }
+            
+            // Group by category
+            const groups = {};
+            filtered.forEach(s => {
+                const cat = s.installed ? '✅ УСТАНОВЛЕНЫ' : (s.category || '📦 ДОСТУПНЫ');
+                if (!groups[cat]) groups[cat] = [];
+                groups[cat].push(s);
             });
             
-            skillsRendered = true;
+            // Render
+            Object.keys(groups).forEach(cat => {
+                const header = document.createElement('div');
+                header.className = 'skills-category-title' + (cat.includes('УСТАНОВЛЕНЫ') ? ' installed' : '');
+                header.textContent = cat + ` (${groups[cat].length})`;
+                container.appendChild(header);
+                
+                groups[cat].forEach(skill => {
+                    container.appendChild(createSkillCard(skill));
+                });
+            });
+            
+            if (filtered.length === 0) {
+                container.innerHTML = '<div style="text-align:center;color:rgba(255,255,255,0.5);padding:40px;">Ничего не найдено</div>';
+            }
         }
         
-        function createSkillCard(skill, isInstalled) {
+        function createSkillCard(skill) {
             const card = document.createElement('div');
-            card.className = 'skill-card' + (isInstalled ? ' installed' : '');
+            card.className = 'skill-card' + (skill.installed ? ' installed' : '');
+            
+            const badgeClass = skill.installed ? 'installed' : 'available';
+            const badgeText = skill.installed ? '✓ Установлен' : '📦 Установить';
+            
             card.innerHTML = `
-                <div class="skill-name" style="${isInstalled ? 'color:#00ff88' : ''}">${skill.icon || '📦'} ${skill.name}</div>
+                <div class="skill-header">
+                    <div class="skill-name">${skill.icon || '📦'} ${skill.name}</div>
+                    <span class="skill-badge ${badgeClass}">${badgeText}</span>
+                </div>
                 <div class="skill-desc">${skill.desc || 'Нет описания'}</div>
+                <div class="skill-footer">
+                    <div class="skill-meta">
+                        ${skill.category || 'General'} ${skill.version ? '• v' + skill.version : ''}
+                    </div>
+                    ${!skill.installed ? 
+                        `<button class="skill-install-btn" onclick="installSkill('${skill.name}', event)">Установить</button>` :
+                        `<button class="skill-install-btn" disabled>✓ Установлен</button>`
+                    }
+                </div>
             `;
-            card.onclick = () => {
-                haptic('light');
-                if (tg) tg.showPopup({title: skill.name, message: skill.desc || 'Нет описания'});
+            
+            card.onclick = (e) => {
+                if (!e.target.classList.contains('skill-install-btn')) {
+                    showSkillDetails(skill);
+                }
             };
+            
             return card;
         }
         
-        // Notes
-        const NOTES_KEY = 'klavdia_notes_v8';
-        document.getElementById('notes-area').value = localStorage.getItem(NOTES_KEY) || '';
-        function saveNotes() {
-            localStorage.setItem(NOTES_KEY, document.getElementById('notes-area').value);
-            haptic('medium');
-            if (tg) tg.showAlert('✅ Сохранено!');
-            else alert('Сохранено!');
+        function installSkill(name, event) {
+            event.stopPropagation();
+            const btn = event.target;
+            btn.textContent = '⏳ Установка...';
+            btn.disabled = true;
+            
+            // Simulate installation
+            setTimeout(() => {
+                // Add to local installed
+                const skill = localSkills.find(s => s.name === name);
+                if (skill) skill.installed = true;
+                
+                btn.textContent = '✓ Установлен';
+                btn.style.background = 'rgba(0,255,136,0.3)';
+                
+                if (tg) tg.showAlert(`✅ Скилл "${name}" установлен!`);
+                else alert(`✅ Скилл "${name}" установлен!`);
+                
+                // Refresh list
+                setTimeout(renderSkills, 500);
+            }, 1500);
         }
         
-        // Back button
-        if (tg) {
-            tg.BackButton.onClick(() => {
-                closeAll();
-            });
+        function showSkillDetails(skill) {
+            const info = `
+📦 ${skill.name}
+
+${skill.desc || 'Нет описания'}
+
+Категория: ${skill.category || 'General'}
+${skill.version ? 'Версия: ' + skill.version : ''}
+${skill.author ? 'Автор: ' + skill.author : ''}
+
+Статус: ${skill.installed ? '✅ Установлен' : '📦 Доступен для установки'}
+            `;
+            
+            if (tg) {
+                tg.showPopup({
+                    title: skill.name,
+                    message: info,
+                    buttons: skill.installed ? 
+                        [{id: 'ok', type: 'ok'}] :
+                        [{id: 'install', type: 'default', text: 'Установить'}, {id: 'cancel', type: 'cancel'}]
+                }, (btn) => {
+                    if (btn === 'install') {
+                        // Trigger install
+                        renderSkills();
+                    }
+                });
+            } else {
+                alert(info);
+            }
+        }
+        
+        function filterSkills() {
+            renderSkills();
+        }
+        
+        function regenerateOffice() {
+            if (tg) {
+                tg.showPopup({
+                    title: 'Генерация фона',
+                    message: 'Создать новое изображение офиса?',
+                    buttons: [
+                        {id: 'yes', type: 'default', text: 'Да'},
+                        {id: 'no', type: 'cancel', text: 'Отмена'}
+                    ]
+                });
+            }
+        }
+        
+        function saveNotes() {
+            if (tg) tg.showAlert('✅ Сохранено!');
+            else alert('Сохранено!');
         }
     </script>
 </body>
